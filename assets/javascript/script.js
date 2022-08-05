@@ -1,13 +1,10 @@
 // variables
 var currentDate = moment().format("MMMM, Do, dddd, YYYY, h:mm a")
 var currentTime = moment().format("h:mm")
+var currentHour = moment().hour();
 var tasks = [];
 var saveTask = function () {
   localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function getMomentFromTimeString(str){
-  var t = moment(str,'h:mm')
 }
 console.log(currentDate)
 // GIVEN I am using a daily planner to create a schedule
@@ -20,14 +17,14 @@ $("#currentDay").append("Today is " + currentDate)
 // THEN each time block is color-coded to indicate whether it is in the past, present, or future
 $("textarea").each(function () {
   var time = $(this).attr("id");
-if (time < currentTime) {
+if (time < currentHour) {
   $(this).addClass("past")
 } 
-else if (time = currentTime) {
-    $(this).addClass("present")
+else if (time > currentHour) {
+    $(this).addClass("future")
   }
-  else (time > currentTime); {
-  $(this).addClass("future")
+  else {
+  $(this).addClass("present")
 };
 })
 // WHEN I click into a time block

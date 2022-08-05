@@ -33,7 +33,7 @@ var textInput = $("<textarea>").addClass("task-item").val(text);
 $(this).replaceWith(textInput);
 // auto focus new element
 textInput.trigger("focus");
-
+});
 // editable field was un-focused
 $(".task-item").on("blur", function() {
     // get current value of textarea

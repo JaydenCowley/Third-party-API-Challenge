@@ -1,6 +1,10 @@
 // variables
 var currentDate = moment().format("MMMM, Do, dddd, YYYY, h:mm a")
 var currentTime = moment().format("h:mm")
+var tasks = [];
+var saveTask = function () {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function getMomentFromTimeString(str){
   var t = moment(str,'h:mm')
@@ -17,41 +21,66 @@ $("#currentDay").append("Today is " + currentDate)
 $("textarea").each(function () {
   var time = $(this).attr("id");
 if (time < currentTime) {
-  $("task-time").addClass("past")
+  $(this).addClass("past")
 } 
 else if (time = currentTime) {
-    $("task-time").addClass("present")
+    $(this).addClass("present")
   }
   else (time > currentTime); {
-  $("task-time").addClass("future")
+  $(this).addClass("future")
 };
 })
 // WHEN I click into a time block
-$(".task-item").on("click", function() {
-    // get current text of p element
-    var text = $(this)
-      .text()
-      .trim();
-//  replace  element with a new textarea
-var textInput = $("<textarea>").addClass("task-item").val(text);
-$(this).replaceWith(textInput);
-// auto focus new element
-textInput.trigger("focus");
-});
-// editable field was un-focused
-$(".task-item").on("blur", function() {
-    // get current value of textarea
-    var text = $(this).val();
-    // recreate p element
-  var taskP = $("<td>")
-  .text(text);
-
-// replace textarea with new content
-$(this).replaceWith(taskP);
+// $(".task-item").on("click", function() {
+//     // get current text of p element
+//     var text = $(this)
+//       .text()
+//       .trim();
+// //  replace  element with a new textarea
+// var textInput = $("<textarea>").addClass("task-item").val(text);
+// $(this).replaceWith(textInput);
+// // auto focus new element
+// textInput.trigger("focus");
 // });
-});
+// // editable field was un-focused
+// $(".task-item").on("blur", function() {
+//     // get current value of textarea
+//     var text = $(this).val();
+//     // recreate p element
+//   var taskP = $("<td>")
+//   .text(text);
+
+// // replace textarea with new content
+// $(this).replaceWith(taskP);
+// // });
+// });
 // THEN I can enter an event
 // WHEN I click the save button for that time block
 // THEN the text for that event is saved in local storage
+$(".saveBtn").on("click", function () {
+  var saveId = $(this).siblings("textarea").attr("id");
+  var saveText = $(this).siblings("textarea").val().trim();
+  var createDataObject = {
+    id: saveId,
+    text: saveText
+  };
+  if(tasks === null){
+    tasks = [];
+  }
+  tasks.push(createDataObject);
+  saveTask();
+});
 // WHEN I refresh the page
 // THEN the saved events persist
+var getTasks = function () {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+  if (tasks) {
+   $.each(tasks, function (index, value) {
+    var eventId = value.id;
+    var eventText = value.text;
+
+    $("#"+eventId).val(eventText);
+   });
+  }
+};
+getTasks();

@@ -12,7 +12,7 @@ SO THAT I can manage my time effectively
 
 ## Purpose
 This is an application that save your tasks to local storage so you never lose your tasks.
-
+View the live [website](https://jaydencowley.github.io/Third-party-API-Challenge/)
 ## Screenshot
 ![image](https://user-images.githubusercontent.com/98612225/183217778-09faad9e-bbfa-43df-8a9e-8982f1b59a89.png)
 

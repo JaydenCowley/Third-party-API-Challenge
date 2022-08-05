@@ -1,6 +1,7 @@
 // variables
 var currentDate = moment().format("MMMM, Do, dddd, YYYY, h:mm a")
 var currentTime = moment().format("h:mm")
+
 function getMomentFromTimeString(str){
   var t = moment(str,'h:mm')
 }
@@ -13,15 +14,18 @@ $("#currentDay").append("Today is " + currentDate)
 // THEN I am presented with time blocks for standard business hours
 // WHEN I view the time blocks for that day
 // THEN each time block is color-coded to indicate whether it is in the past, present, or future
-if (getMomentFromTimeString($("task-time")) < currentTime) {
+$("textarea").each(function () {
+  var time = $(this).attr("id");
+if (time < currentTime) {
   $("task-time").addClass("past")
 } 
-else if (getMomentFromTimeString($("task-time")) = currentTime) {
+else if (time = currentTime) {
     $("task-time").addClass("present")
   }
-  else (getMomentFromTimeString($("task-time")) > currentTime); {
+  else (time > currentTime); {
   $("task-time").addClass("future")
 };
+})
 // WHEN I click into a time block
 $(".task-item").on("click", function() {
     // get current text of p element
